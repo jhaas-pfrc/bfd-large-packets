@@ -1,0 +1,177 @@
+<?xml version="1.0"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
+<!ENTITY RFC0791 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.0791.xml">
+<!ENTITY RFC1191 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.1191.xml">
+<!ENTITY RFC2119 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml">
+<!ENTITY RFC5880 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.5880.xml">
+<!ENTITY RFC5881 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.5881.xml">
+<!ENTITY RFC5883 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.5883.xml">
+<!ENTITY RFC7880 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7880.xml">
+<!ENTITY BFD-ECHO-PATH-MTU SYSTEM "https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.haas-xiao-bfd-echo-path-mtu.xml">
+]>
+<?rfc comments="yes"?>
+<?rfc compact="yes"?>
+<?rfc inline="yes"?>
+<?rfc sortrefs="yes"?>
+<?rfc subcompact="yes"?>
+<?rfc symrefs="yes"?>
+<?rfc toc="yes"?>
+<?rfc tocdepth="3"?>
+<?rfc tocindent="yes"?>
+<?rfc tocompact="yes"?>
+
+
+<rfc category="std" docName="draft-haas-bfd-large-packets-00">
+    <front>
+	<title>BFD Encapsulated in Large Packets</title>
+
+	<author fullname="Jeffrey Haas" initials="J." surname="Haas">
+	    <organization>Juniper Networks, Inc.</organization>
+	    <address>
+		<postal>
+		<street>1133 Innovation Way</street>
+		<city>Sunnyvale</city>
+		<region>CA</region>
+		<code>94089</code>
+		<country>US</country>
+		</postal>
+		<email>jhaas@juniper.net</email>
+	    </address>
+	</author>
+
+	<author fullname="Albert Fu" initials="A." surname="Fu">
+	    <organization>Bloomberg</organization>
+	    <address>
+		<email>afu14@bloomberg.net</email>
+	    </address>
+	</author>
+	<date month="March" year="2018" />
+
+	<abstract>
+	    <t>
+	    The Bidirectional Forwarding Detection (BFD) protocol is commonly used to verify
+	    connectivity between two systems.  BFD packets are typically very small.  It is
+	    desirable in some circumstances to know that not only is the path between two systems
+	    reachable, but also that it is capable of carrying a payload of a particular size.  This
+	    document discusses thoughts on how to implement such a mechanism using BFD in
+	    Asynchronous mode.
+	    </t>
+
+	</abstract>
+
+	<note title="Requirements Language">
+	    <t>
+	    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+	    "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" are to
+	    be interpreted as described in <xref target="RFC2119" /> only when
+	    they appear in all upper case. They may also appear in lower or
+	    mixed case as English words, without normative meaning.
+	    </t>
+	</note>
+    </front>
+
+    <middle>
+	<section anchor="intro" title="Introduction">
+	    <t>
+	    The Bidirectional Forwarding Detection (BFD) <xref target="RFC5880"/> protocol is commonly
+	    used to verify connectivity between two systems.  However, some applications may require
+	    that the Path MTU <xref target="RFC1191"/> between those two systems meets a certain
+	    minimum criteria.  When the Path MTU decreases below the minimum threshold, those
+	    applications may wish to consider the path unusable.
+	    </t>
+
+	    <t>
+	    BFD may be encapsulated in a number of transport protocols.  An example of this is
+	    single-hop BFD <xref target="RFC5881"/>.  In that case, the link MTU configuration is
+	    typically enough to guarantee communication between the two systems for that size MTU.
+	    BFD Echo mode (Section 6.4 of <xref target="RFC5880"/>) is sufficient to permit
+	    verification of the Path MTU of such directly connected systems.  Previous proposals 
+	    (<xref target="I-D.haas-xiao-bfd-echo-path-mtu"/>)
+	    have been made for testing Path MTU for such directly connected systems.
+	    However, in the case of multi-hop BFD <xref target="RFC5883"/>, this guarantee does not hold.
+	    </t>
+
+	    <t>
+	    The encapsulation of BFD in multi-hop sessions is a simple UDP packet.  The BFD elements
+	    of procedure (Section 6.8.6 of <xref target="RFC5880"/>) covers validating the BFD
+	    payload.  However, the specification is silent on the length of the encapsulation that is
+	    carrying the BFD PDU.  While it is most common that the transport protocol payload (i.e.
+	    UDP) length is the exact size of the BFD PDU, this is not required by the elements of
+	    procedure.  This leads to the possibility that the transport protocol length may be
+	    larger than the contained BFD PDU.
+	    </t>
+        </section>
+
+	<section title="BFD Encapsulated in Large Packets">
+	    <t>
+	    Support for BFD between two systems is typically configured, even if the actual session
+	    may be dynamically created by a client protocol.  A new BFD variable is defined in this
+	    document:
+	    </t>
+
+	    <t><list style="hanging" hangIndent="4">
+	    <t hangText="bfd.PaddedPduSize"><vspace/>
+	      The BFD transport protocol payload size is increased to this value.  The contents of
+	      this additional payload MUST be zero.  The minimum size of this variable MUST NOT be
+	      smaller than permitted by the element of BFD procedure; 24 or 26 - see Section 6.8.6
+	      of <xref target="RFC5880"/>. 
+	    </t>
+	    </list></t>
+
+	    <t>
+	    The Don't Fragment bit (Section 2.3 of <xref target="RFC0791"/>)
+	    of the IP payload, when using IP encapsulations, MUST be set.
+	    </t>
+	</section>
+
+	<section title="Implementation and Deployment Considerations">
+	    <t>
+	    While this document proposes no change to the BFD protocol, implementations may not
+	    permit arbitrarily padded transport PDUs to carry BFD packets.  While Section 6 of 
+	    <xref target="RFC5880"/> warns against excessive pedantry, implementations may not work
+	    with this mechanism without additional support.  Additional changes to the base BFD
+	    protocol may be required to permit negotiation of this functionality and the padding
+	    value.
+	    </t>
+
+	    <t>
+	    It is also worthy of note that even if an implementation can function with larger
+	    transport PDUs, that additional packet size may have impact on BFD scaling.
+	    </t>
+
+	    <t>
+	    This mechanism also can be applied to other forms of BFD, including S-BFD 
+	    <xref target="RFC7880"/>.
+	    </t>
+	</section>
+
+	<section title="Security Considerations">
+	    <t>
+	    This document does not change the underlying security considerations of the BFD protocol
+	    or its encapsulations.
+	    </t>
+	</section>
+
+	<section title="IANA Considerations">
+	    <t>
+	    This document introduces no additional considerations to IANA.
+	    </t>
+	</section>
+
+    </middle>
+
+    <back>
+	<references title="Normative References">
+	    &RFC0791;
+	    &RFC2119;
+	    &RFC5880;
+	    &RFC5881;
+	    &RFC5883;
+	    &RFC7880;
+	</references>
+	<references title="Informative References">
+	    &RFC1191;
+	    &BFD-ECHO-PATH-MTU;
+	</references>
+    </back>
+</rfc>
