@@ -21,7 +21,7 @@
 <?rfc tocompact="yes"?>
 
 
-<rfc category="std" docName="draft-haas-bfd-large-packets-00">
+<rfc category="std" docName="draft-haas-bfd-large-packets-01">
     <front>
 	<title>BFD Encapsulated in Large Packets</title>
 
@@ -45,7 +45,7 @@
 		<email>afu14@bloomberg.net</email>
 	    </address>
 	</author>
-	<date month="March" year="2018" />
+	<date month="July" year="2018" />
 
 	<abstract>
 	    <t>
@@ -120,7 +120,7 @@
 
 	    <t>
 	    The Don't Fragment bit (Section 2.3 of <xref target="RFC0791"/>)
-	    of the IP payload, when using IP encapsulations, MUST be set.
+	    of the IP payload, when using IPv4 encapsulation, MUST be set.
 	    </t>
 	</section>
 
