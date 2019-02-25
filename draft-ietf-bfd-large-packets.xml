@@ -3,6 +3,7 @@
 <!ENTITY RFC0791 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.0791.xml">
 <!ENTITY RFC1191 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.1191.xml">
 <!ENTITY RFC2119 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml">
+<!ENTITY RFC3719 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.3719.xml">
 <!ENTITY RFC5880 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.5880.xml">
 <!ENTITY RFC5881 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.5881.xml">
 <!ENTITY RFC5883 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.5883.xml">
@@ -21,7 +22,7 @@
 <?rfc tocompact="yes"?>
 
 
-<rfc category="std" docName="draft-haas-bfd-large-packets-01">
+<rfc category="std" docName="draft-ietf-bfd-large-packets-00">
     <front>
 	<title>BFD Encapsulated in Large Packets</title>
 
@@ -45,7 +46,7 @@
 		<email>afu14@bloomberg.net</email>
 	    </address>
 	</author>
-	<date month="October" year="2018" />
+	<date month="February" year="2019" />
 
 	<abstract>
 	    <t>
@@ -136,7 +137,24 @@
 
 	    <t>
 	    It is also worthy of note that even if an implementation can function with larger
-	    transport PDUs, that additional packet size may have impact on BFD scaling.
+	    transport PDUs, that additional packet size may have impact on BFD scaling.  Such
+	    systems may support a lower transmission interval (bfd.DesiredMinTxInterval) when
+	    operating in large packet mode.  This interval may depend on the size of the transport
+	    PDU.
+	    </t>
+
+	    <t>
+	    Given the impact on scaling larger PDU sizes may have on BFD implementations, operators
+	    should consider applying it only in situations where there is appropriate concern for
+	    path MTU.  An example of this is commercial WAN services.
+	    </t>
+
+	    <t>
+	    Since the consideration is path MTU, BFD sessions using this feature only need to use a
+	    bfd.PaddedPduSize appropriate to exercise the path MTU for the desired application.
+	    This may be significantly smaller than the system's link MTU; e.g. desired path MTU is
+	    1500 bytes while the interface MTU that BFD with large packets is running on is 9000
+	    bytes.
 	    </t>
 
 	    <t>
@@ -171,7 +189,14 @@
 	</references>
 	<references title="Informative References">
 	    &RFC1191;
+	    &RFC3719;
 	    &BFD-ECHO-PATH-MTU;
 	</references>
+	<section title="Related Features">
+	    <t>
+	    <xref target="RFC3719">IS-IS</xref> supports a Padding feature for its hellos.  This
+	    provides the ability to detect inconsistent link MTUs.
+	    </t>
+	</section>
     </back>
 </rfc>
