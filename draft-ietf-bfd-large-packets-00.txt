@@ -5,8 +5,8 @@
 Network Working Group                                            J. Haas
 Internet-Draft                                    Juniper Networks, Inc.
 Intended status: Standards Track                                   A. Fu
-Expires: August 28, 2019                                       Bloomberg
-                                                       February 24, 2019
+Expires: August 30, 2019                                  Bloomberg L.P.
+                                                       February 26, 2019
 
 
                    BFD Encapsulated in Large Packets
@@ -45,7 +45,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on August 28, 2019.
+   This Internet-Draft will expire on August 30, 2019.
 
 
 
@@ -53,7 +53,7 @@ Status of This Memo
 
 
 
-Haas & Fu                Expires August 28, 2019                [Page 1]
+Haas & Fu                Expires August 30, 2019                [Page 1]
 
 Internet-Draft      BFD Encapsulated in Large Packets      February 2019
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Haas & Fu                Expires August 28, 2019                [Page 2]
+Haas & Fu                Expires August 30, 2019                [Page 2]
 
 Internet-Draft      BFD Encapsulated in Large Packets      February 2019
 
@@ -165,7 +165,7 @@ Internet-Draft      BFD Encapsulated in Large Packets      February 2019
 
 
 
-Haas & Fu                Expires August 28, 2019                [Page 3]
+Haas & Fu                Expires August 30, 2019                [Page 3]
 
 Internet-Draft      BFD Encapsulated in Large Packets      February 2019
 
@@ -221,7 +221,7 @@ Internet-Draft      BFD Encapsulated in Large Packets      February 2019
 
 
 
-Haas & Fu                Expires August 28, 2019                [Page 4]
+Haas & Fu                Expires August 30, 2019                [Page 4]
 
 Internet-Draft      BFD Encapsulated in Large Packets      February 2019
 
@@ -265,7 +265,7 @@ Authors' Addresses
 
 
    Albert Fu
-   Bloomberg
+   Bloomberg L.P.
 
    Email: afu14@bloomberg.net
 
@@ -277,4 +277,4 @@ Authors' Addresses
 
 
 
-Haas & Fu                Expires August 28, 2019                [Page 5]
+Haas & Fu                Expires August 30, 2019                [Page 5]
