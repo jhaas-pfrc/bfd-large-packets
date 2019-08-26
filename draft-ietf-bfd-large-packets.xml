@@ -22,7 +22,7 @@
 <?rfc tocompact="yes"?>
 
 
-<rfc category="std" docName="draft-ietf-bfd-large-packets-00">
+<rfc category="std" docName="draft-ietf-bfd-large-packets-01">
     <front>
 	<title>BFD Encapsulated in Large Packets</title>
 
@@ -46,7 +46,7 @@
 		<email>afu14@bloomberg.net</email>
 	    </address>
 	</author>
-	<date month="February" year="2019" />
+	<date month="August" year="2019" />
 
 	<abstract>
 	    <t>
