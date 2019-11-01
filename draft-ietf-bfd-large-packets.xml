@@ -7,6 +7,7 @@
 <!ENTITY RFC5880 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.5880.xml">
 <!ENTITY RFC5881 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.5881.xml">
 <!ENTITY RFC5883 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.5883.xml">
+<!ENTITY RFC7130 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7130.xml">
 <!ENTITY RFC7880 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7880.xml">
 <!ENTITY BFD-ECHO-PATH-MTU SYSTEM "https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.haas-xiao-bfd-echo-path-mtu.xml">
 ]>
@@ -22,7 +23,7 @@
 <?rfc tocompact="yes"?>
 
 
-<rfc category="std" docName="draft-ietf-bfd-large-packets-01">
+<rfc category="std" docName="draft-ietf-bfd-large-packets-02">
     <front>
 	<title>BFD Encapsulated in Large Packets</title>
 
@@ -46,7 +47,7 @@
 		<email>afu14@bloomberg.net</email>
 	    </address>
 	</author>
-	<date month="August" year="2019" />
+	<date month="November" year="2019" />
 
 	<abstract>
 	    <t>
@@ -126,41 +127,135 @@
 	</section>
 
 	<section title="Implementation and Deployment Considerations">
-	    <t>
-	    While this document proposes no change to the BFD protocol, implementations may not
-	    permit arbitrarily padded transport PDUs to carry BFD packets.  While Section 6 of 
-	    <xref target="RFC5880"/> warns against excessive pedantry, implementations may not work
-	    with this mechanism without additional support.  Additional changes to the base BFD
-	    protocol may be required to permit negotiation of this functionality and the padding
-	    value.
-	    </t>
+	    <section title="Implementations that do not support Large BFD Packets">
+	      <t>
+	      While this document proposes no change to the BFD protocol, implementations may not
+	      permit arbitrarily padded transport PDUs to carry BFD packets.  While Section 6 of 
+	      <xref target="RFC5880"/> warns against excessive pedantry, implementations may not work
+	      with this mechanism without additional support.
+	      </t>
 
-	    <t>
-	    It is also worthy of note that even if an implementation can function with larger
-	    transport PDUs, that additional packet size may have impact on BFD scaling.  Such
-	    systems may support a lower transmission interval (bfd.DesiredMinTxInterval) when
-	    operating in large packet mode.  This interval may depend on the size of the transport
-	    PDU.
-	    </t>
+	      <t>
+	      <xref target="RFC5880"/>, section 6.8.6, discusses the procedures for receiving
+	      BFD Control packets.  When an implementation is incapable of processing Large
+	      BFD Packets, it could manifest in one of two possible ways:
+	      </t>
 
-	    <t>
-	    Given the impact on scaling larger PDU sizes may have on BFD implementations, operators
-	    should consider applying it only in situations where there is appropriate concern for
-	    path MTU.  An example of this is commercial WAN services.
-	    </t>
+	      <t><list style="symbols">
+	      <t>
+	      A receiving BFD implementation is incapable of accepting Large BFD Packets.
+	      This is identical to the packet being discarded.
+	      </t>
+	      <t>
+	      A receiving BFD implementation is capable of accepting Large BFD Packets,
+	      but the Control packet is improperly rejected during validation procedures.
+	      This is identical to the packet being discarded.
+	      </t>
+	      </list></t>
 
-	    <t>
-	    Since the consideration is path MTU, BFD sessions using this feature only need to use a
-	    bfd.PaddedPduSize appropriate to exercise the path MTU for the desired application.
-	    This may be significantly smaller than the system's link MTU; e.g. desired path MTU is
-	    1500 bytes while the interface MTU that BFD with large packets is running on is 9000
-	    bytes.
-	    </t>
+	      <t>
+	      In each of these cases, the BFD state machine would behave as if it were not
+	      receiving Control packets and the implementation would follow normal BFD
+	      procedures with regards to not having received Control packets.
+	      </t>
+	    </section>
 
+	    <section title="Selecting MTU size to be detected">
+	      <t>
+	      Since the consideration is path MTU, BFD sessions using this feature only need to use a
+	      bfd.PaddedPduSize appropriate to exercise the path MTU for the desired application.
+	      This may be significantly smaller than the system's link MTU; e.g. desired path MTU is
+	      1500 bytes while the interface MTU that BFD with large packets is running on is 9000
+	      bytes.
+	      </t>
+
+	      <t>
+	      In the case multiple BFD clients desire to test the same BFD endpoints using
+	      different bfd.PaddedPduSize parameters, implementations should select the largest
+	      bfd.PaddedPduSize parameter from the configured sessions.  This is similar to
+	      how implementations of BFD select the most aggressive timing parameters
+	      for multiple sessions to the same endpoint.
+	      </t>
+	    </section>
+
+	    <section title="Detecting MTU mismatches">
+	      <t>
+	      The accepted MTU for an interface is impacted by packet encapsulation
+	      considerations at a given layer; e.g. layer 2, layer 3, tunnel, etc.  A common
+	      misconfiguration of interface parameters is inconsistent MTU.  In the presence
+	      of inconsistent MTU, it is possible for applications to have unidirectional
+	      connectivity.
+	      </t>
+
+	      <t>
+	      When it is necessary for an application using BFD with Large Packets to test
+	      the bi-directional Path MTU, it is necessary to configure the
+	      bfd.PaddedPduSize parameter on both sides of an interface.  E.g., if
+	      the desire is to verify a 1500 byte MTU in both directions on an Ethernet or
+	      point to point link, each side of the BFD session must have bfd.PaddedPduSize
+	      set to 1500.  In the absence of such consistent configuration, BFD with 
+	      Large Packets may correctly determine unidirectional connectivity at the
+	      tested MTU, but bi-directional MTU may not be properly validated.
+	      </t>
+
+	      <t>
+	      It should be noted that some interfaces may intentionally have different MTUs.
+	      Setting the bfd.PaddedPduSize appropriately for each side of the interface
+	      supports such scenarios.
+	      </t>
+	    </section>
+
+	    <section title="Equal Cost Multiple Paths (ECMP) or other Load Balancing Considerations">
+	      <t>
+	      Various mechanisms are utilized to increase throughput between two endpoints
+	      at various network layers.  Such features include Link Aggregate Groups (LAGs)
+	      or ECMP forwarding. Such mechanisms balance traffic across multiple physical
+	      links while hiding the details of that balacing from the higher networking
+	      layers.  The details of that balancing are highly implementation specific.
+	      </t>
+
+	      <t>
+	      In the presence of such load balancing mechanisms, it is possible to have
+	      member links that are not properly forwarding traffic.  In such circumstances,
+	      this will result in dropped traffic when traffic is chosen to be load balanced
+	      across those member links.
+	      </t>
+
+	      <t>
+	      Such load balancing mechanisms may not permit all link members to be properly
+	      tested by BFD.  This is because the BFD Control packets may be forwarded only
+	      along links that are up.  BFD on LAG, <xref target="RFC7130"/>, was developed
+	      to help cover one such scenario.  However, for testing forwarding over
+	      multiple hops, there is no such specified general purpose BFD mechanism for
+	      exercising all links in an ECMP.  This may result in a BFD session being in
+	      the Up state while some traffic may be dropped or otherwise negatively
+	      impacted along some component links.
+	      </t>
+
+	      <t>
+	      Some BFD implementations utilize their internal understanding of the component
+	      links and their resultant forwarding to exercise BFD in such a way to better
+	      test the ECMP members and to tie the BFD session state to the health of that
+	      ECMP.  Due to the implementation specific load balancing, it is not possible
+	      to standardize such additional mechanisms for BFD.
+	      </t>
+
+	      <t>
+	      Mis-configuration of some member MTUs may lead to Load Balancing that may have
+	      an inconsistent Path MTU depending on how the traffic is balanced.  While the
+	      intent of BFD with Large Packets is to verify path MTU, it is subject to the
+	      same considerations above.
+	      </t>
+
+
+	    </section>
+
+	    <section title="S-BFD">
 	    <t>
 	    This mechanism also can be applied to other forms of BFD, including S-BFD 
 	    <xref target="RFC7880"/>.
 	    </t>
+	    </section>
 	</section>
 
 	<section title="Security Considerations">
@@ -176,6 +271,13 @@
 	    </t>
 	</section>
 
+	<section title="Acknowledgments">
+	    <t>
+	    The authors would like to thank Les Ginsberg, Mahesh Jethandani, Robert Raszuk,
+	    and Ketan Talaulikar, for their valuable feedback on this proposal.
+	    </t>
+	</section>
+
     </middle>
 
     <back>
@@ -185,6 +287,7 @@
 	    &RFC5880;
 	    &RFC5881;
 	    &RFC5883;
+	    &RFC7130;
 	    &RFC7880;
 	</references>
 	<references title="Informative References">
