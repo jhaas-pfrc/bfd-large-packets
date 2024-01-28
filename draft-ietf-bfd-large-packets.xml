@@ -1,16 +1,11 @@
-<?xml version="1.0"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
-<!ENTITY RFC0791 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.0791.xml">
-<!ENTITY RFC1191 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.1191.xml">
-<!ENTITY RFC2119 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml">
-<!ENTITY RFC3719 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.3719.xml">
-<!ENTITY RFC5880 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.5880.xml">
-<!ENTITY RFC5881 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.5881.xml">
-<!ENTITY RFC5883 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.5883.xml">
-<!ENTITY RFC7130 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7130.xml">
-<!ENTITY RFC7880 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7880.xml">
-<!ENTITY BFD-ECHO-PATH-MTU SYSTEM "https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.haas-xiao-bfd-echo-path-mtu.xml">
+<?xml version="1.0" encoding='utf-8'?>
+<!DOCTYPE rfc [
+  <!ENTITY nbsp    "&#160;">
+  <!ENTITY zwsp   "&#8203;">
+  <!ENTITY nbhy   "&#8209;">
+  <!ENTITY wj     "&#8288;">
 ]>
+<?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
 <?rfc comments="yes"?>
 <?rfc compact="yes"?>
 <?rfc inline="yes"?>
@@ -22,8 +17,19 @@
 <?rfc tocindent="yes"?>
 <?rfc tocompact="yes"?>
 
-
-<rfc category="std" docName="draft-ietf-bfd-large-packets-02">
+<rfc 
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    category="std"
+    docName="draft-ietf-bfd-large-packets-03"
+    ipr="trust200902"
+    submissionType="IETF"
+    xml:lang="en"
+    tocInclude="true"
+    tocDepth="4"
+    symRefs="true"
+    sortRefs="true"
+    version="3"
+>
     <front>
 	<title>BFD Encapsulated in Large Packets</title>
 
@@ -47,7 +53,7 @@
 		<email>afu14@bloomberg.net</email>
 	    </address>
 	</author>
-	<date month="November" year="2019" />
+	<date year="2024" />
 
 	<abstract>
 	    <t>
@@ -58,18 +64,7 @@
 	    document discusses thoughts on how to implement such a mechanism using BFD in
 	    Asynchronous mode.
 	    </t>
-
 	</abstract>
-
-	<note title="Requirements Language">
-	    <t>
-	    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-	    "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" are to
-	    be interpreted as described in <xref target="RFC2119" /> only when
-	    they appear in all upper case. They may also appear in lower or
-	    mixed case as English words, without normative meaning.
-	    </t>
-	</note>
     </front>
 
     <middle>
@@ -104,6 +99,16 @@
 	    </t>
         </section>
 
+        <section>
+            <name>Requirements Language</name>
+            <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL
+            NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED",
+            "MAY", and "OPTIONAL" in this document are to be interpreted as
+            described in BCP 14 <xref target="RFC2119"/> <xref
+            target="RFC8174"/> when, and only when, they appear in all
+            capitals, as shown here.</t>
+        </section>
+
 	<section title="BFD Encapsulated in Large Packets">
 	    <t>
 	    Support for BFD between two systems is typically configured, even if the actual session
@@ -111,14 +116,15 @@
 	    document:
 	    </t>
 
-	    <t><list style="hanging" hangIndent="4">
-	    <t hangText="bfd.PaddedPduSize"><vspace/>
+            <dl newline='true'>
+            <dt>bfd.PaddedPduSize</dt>
+            <dd>
 	      The BFD transport protocol payload size is increased to this value.  The contents of
 	      this additional payload MUST be zero.  The minimum size of this variable MUST NOT be
 	      smaller than permitted by the element of BFD procedure; 24 or 26 - see Section 6.8.6
 	      of <xref target="RFC5880"/>. 
-	    </t>
-	    </list></t>
+	    </dd>
+            </dl>
 
 	    <t>
 	    The Don't Fragment bit (Section 2.3 of <xref target="RFC0791"/>)
@@ -141,17 +147,17 @@
 	      BFD Packets, it could manifest in one of two possible ways:
 	      </t>
 
-	      <t><list style="symbols">
-	      <t>
+              <ul>
+	      <li>
 	      A receiving BFD implementation is incapable of accepting Large BFD Packets.
 	      This is identical to the packet being discarded.
-	      </t>
-	      <t>
+	      </li>
+	      <li>
 	      A receiving BFD implementation is capable of accepting Large BFD Packets,
 	      but the Control packet is improperly rejected during validation procedures.
 	      This is identical to the packet being discarded.
-	      </t>
-	      </list></t>
+	      </li>
+	      </ul>
 
 	      <t>
 	      In each of these cases, the BFD state machine would behave as if it were not
@@ -210,7 +216,7 @@
 	      Various mechanisms are utilized to increase throughput between two endpoints
 	      at various network layers.  Such features include Link Aggregate Groups (LAGs)
 	      or ECMP forwarding. Such mechanisms balance traffic across multiple physical
-	      links while hiding the details of that balacing from the higher networking
+	      links while hiding the details of that balancing from the higher networking
 	      layers.  The details of that balancing are highly implementation specific.
 	      </t>
 
@@ -282,18 +288,19 @@
 
     <back>
 	<references title="Normative References">
-	    &RFC0791;
-	    &RFC2119;
-	    &RFC5880;
-	    &RFC5881;
-	    &RFC5883;
-	    &RFC7130;
-	    &RFC7880;
+            <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.0791.xml"/>
+            <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.2119.xml"/>
+            <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.5880.xml"/>
+            <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.5881.xml"/>
+            <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.5883.xml"/>
+            <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.7130.xml"/>
+            <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.7880.xml"/>
+            <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8174.xml"/>
 	</references>
 	<references title="Informative References">
-	    &RFC1191;
-	    &RFC3719;
-	    &BFD-ECHO-PATH-MTU;
+            <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.1191.xml"/>
+            <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.3719.xml"/>
+            <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.haas-xiao-bfd-echo-path-mtu.xml"/>
 	</references>
 	<section title="Related Features">
 	    <t>
