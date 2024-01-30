@@ -171,7 +171,7 @@
 	      Since the consideration is path MTU, BFD sessions using this feature only need to use a
 	      bfd.PaddedPduSize appropriate to exercise the path MTU for the desired application.
 	      This may be significantly smaller than the system's link MTU; e.g. desired path MTU is
-	      1500 bytes while the interface MTU that BFD with large packets is running on is 9000
+	      1512 bytes while the interface MTU that BFD with large packets is running on is 9000
 	      bytes.
 	      </t>
 
@@ -264,6 +264,42 @@
 	    </section>
 	</section>
 
+
+        <section anchor="yang-module" title="BFD Encapsulated in Large Packets YANG Module">
+            <section anchor="data-model-overview" title="Data Model Overview">
+                <t>
+                This YANG module augments the "ietf-bfd" module to add a flag
+                'padding' to enable this feature. The feature statement
+                'padding' needs to be enabled to indicate that BFD Encapsulated
+                in Large Packet is supported by the implementation.
+                </t>
+
+                <figure>
+                <artwork><![CDATA[
+INSERT_TEXT_FROM_FILE(../bin/ietf-bfd-large@YYYY-MM-DD-tree.txt,69)
+]]>
+                </artwork>
+                </figure>
+            </section>
+
+            <section title="YANG Module">
+                <t>
+                This YANG module imports 
+                <xref target="RFC8349">A YANG Data Model for Routing</xref>,
+                and 
+                <xref target="RFC9314">YANG Data Model for Bidirectional Forwading Detection (BFD)</xref>.
+                </t>
+                <figure>
+                    <artwork><![CDATA[
+<CODE BEGINS> file "ietf-bfd-large@YYYY-MM-DD.yang"
+    INSERT_TEXT_FROM_FILE(../bin/ietf-bfd-large@YYYY-MM-DD.yang,69)
+<CODE ENDS>
+]]>
+                    </artwork>
+                </figure>
+            </section>
+        </section>
+
 	<section title="Security Considerations">
 	    <t>
 	    This document does not change the underlying security considerations of the BFD protocol
@@ -296,6 +332,8 @@
             <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.7130.xml"/>
             <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.7880.xml"/>
             <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8174.xml"/>
+            <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8349.xml"/>
+            <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.9314.xml"/>
 	</references>
 	<references title="Informative References">
             <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.1191.xml"/>
