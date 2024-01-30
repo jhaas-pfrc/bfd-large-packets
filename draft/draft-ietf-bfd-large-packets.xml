@@ -264,22 +264,40 @@
 	    </section>
 	</section>
 
-	<section title="YANG Module">
-            <t>
-            This YANG module imports <xref target="RFC6991">Common YANG
-            Types</xref>, <xref target="RFC8349">A YANG Data Model for
-            Routing</xref>, and <xref target="RFC9314">YANG Data Model for
-            Bidirectional Forwading Detection (BFD)</xref>.
-            </t>
+
+        <section anchor="yang-module" title="Stability YANG Module">
+            <section anchor="data-model-overview" title="Data Model Overview">
+                <t>
+                This YANG module augments the "ietf-bfd" module to add a flag
+                'padding' to enable this feature. The feature statement
+                'padding' needs to be enabled to indicate that BFD Encapsulated
+                in Large Packet is supported by the implementation.
+                </t>
 
                 <figure>
-                    <artwork><![CDATA[
-                    <CODE BEGINS> file "ietf-bfd-large@YYYY-MM-DD.yang"
-                    INSERT_TEXT_FROM_FILE(../bin/ietf-bfd-large@YYYY-MM-DD.yang,69)
-                    <CODE ENDS>
-                    ]]>
-	        </artwork>
+                <artwork><![CDATA[
+INSERT_TEXT_FROM_FILE(../bin/ietf-bfd-large@YYYY-MM-DD-tree.txt,69)
+]]>
+                </artwork>
                 </figure>
+            </section>
+
+            <section title="YANG Module">
+                <t>
+                This YANG module imports 
+                <xref target="RFC8349">A YANG Data Model for Routing</xref>,
+                and 
+                <xref target="RFC9314">YANG Data Model for Bidirectional Forwading Detection (BFD)</xref>.
+                </t>
+                <figure>
+                    <artwork><![CDATA[
+<CODE BEGINS> file "ietf-bfd-large@YYYY-MM-DD.yang"
+    INSERT_TEXT_FROM_FILE(../bin/ietf-bfd-large@YYYY-MM-DD.yang,69)
+<CODE ENDS>
+]]>
+                    </artwork>
+                </figure>
+            </section>
         </section>
 
 	<section title="Security Considerations">
@@ -311,7 +329,6 @@
             <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.5880.xml"/>
             <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.5881.xml"/>
             <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.5883.xml"/>
-            <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6991.xml"/>
             <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.7130.xml"/>
             <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.7880.xml"/>
             <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8174.xml"/>
