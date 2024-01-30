@@ -265,7 +265,7 @@
 	</section>
 
 
-        <section anchor="yang-module" title="Stability YANG Module">
+        <section anchor="yang-module" title="BFD Encapsulated in Large Packets YANG Module">
             <section anchor="data-model-overview" title="Data Model Overview">
                 <t>
                 This YANG module augments the "ietf-bfd" module to add a flag
