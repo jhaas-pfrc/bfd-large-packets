@@ -171,7 +171,7 @@
 	      Since the consideration is path MTU, BFD sessions using this feature only need to use a
 	      bfd.PaddedPduSize appropriate to exercise the path MTU for the desired application.
 	      This may be significantly smaller than the system's link MTU; e.g. desired path MTU is
-	      1500 bytes while the interface MTU that BFD with large packets is running on is 9000
+	      1512 bytes while the interface MTU that BFD with large packets is running on is 9000
 	      bytes.
 	      </t>
 
