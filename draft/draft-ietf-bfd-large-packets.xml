@@ -20,7 +20,7 @@
 <rfc 
     xmlns:xi="http://www.w3.org/2001/XInclude"
     category="std"
-    docName="draft-ietf-bfd-large-packets-05"
+    docName="draft-ietf-bfd-large-packets-06"
     ipr="trust200902"
     submissionType="IETF"
     xml:lang="en"
@@ -162,7 +162,13 @@
 	      <t>
 	      In each of these cases, the BFD state machine would behave as if it were not
 	      receiving Control packets and the implementation would follow normal BFD
-	      procedures with regards to not having received Control packets.
+	      procedures with regards to not having received control packets.
+	      </t>
+
+	      <t>
+              If Large BFD Packets is enabled on a session that is already in the Up state
+              and the remote BFD system does not, or cannot support receiving the padded
+              BFD control packets, the session will go Down.
 	      </t>
 	    </section>
 
