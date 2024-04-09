@@ -110,9 +110,12 @@ module ietf-bfd-large {
       "RFC XXXX, BFD Encapsulated in Large Packets.";
   }
 
-  augment "/rt:routing/rt:control-plane-protocols/" +
-          "rt:control-plane-protocol/bfd:bfd/bfd-ip-sh:ip-sh/" +
-          "bfd-ip-sh:sessions/bfd-ip-sh:session" {
+  grouping bfd-large-common {
+    description
+      "Common configuration and operational state for BFD
+       Encapsulated in Large Packets.";
+    reference
+      "RFC XXXX, BFD Encapsulated in Large Packets.";
     leaf pdu-size {
       if-feature "padding";
       type padded-pdu-size;
@@ -121,6 +124,12 @@ module ietf-bfd-large {
          Asynchronous mode BFD session. By default, no additional
          padding is added to such packets.";
     }
+  }
+
+  augment "/rt:routing/rt:control-plane-protocols/" +
+          "rt:control-plane-protocol/bfd:bfd/bfd-ip-sh:ip-sh/" +
+          "bfd-ip-sh:sessions/bfd-ip-sh:session" {
+    uses bfd-large-common;
     description
       "Augment the 'bfd' container to add attributes related to BFD
        Encapsulated in Large Packets.";
@@ -129,14 +138,7 @@ module ietf-bfd-large {
   augment "/rt:routing/rt:control-plane-protocols/" +
           "rt:control-plane-protocol/bfd:bfd/bfd-ip-mh:ip-mh/" +
           "bfd-ip-mh:session-groups/bfd-ip-mh:session-group" {
-    leaf pdu-size {
-      if-feature "padding";
-      type padded-pdu-size;
-      description
-        "If set, this configures the padded PDU size for the
-         Asynchronous mode BFD session. By default, no additional
-         padding is added to such packets.";
-    }
+    uses bfd-large-common;
     description
       "Augment the 'bfd' container to add attributes related to BFD
        Encapsulated in Large Packets.";
@@ -145,14 +147,7 @@ module ietf-bfd-large {
   augment "/rt:routing/rt:control-plane-protocols/" +
           "rt:control-plane-protocol/bfd:bfd/bfd-lag:lag/" +
           "bfd-lag:sessions/bfd-lag:session" {
-    leaf pdu-size {
-      if-feature "padding";
-      type padded-pdu-size;
-      description
-        "If set, this configures the padded PDU size for the
-         Asynchronous mode BFD session. By default, no additional
-         padding is added to such packets.";
-    }
+    uses bfd-large-common;
     description
       "Augment the 'bfd' container to add attributes related to BFD
        Encapsulated in Large Packets.";
@@ -161,14 +156,7 @@ module ietf-bfd-large {
   augment "/rt:routing/rt:control-plane-protocols/" +
           "rt:control-plane-protocol/bfd:bfd/bfd-mpls:mpls/" +
     "bfd-mpls:session-groups/bfd-mpls:session-group" {
-    leaf pdu-size {
-      if-feature "padding";
-      type padded-pdu-size;
-      description
-        "If set, this configures the padded PDU size for the
-         Asynchronous mode BFD session. By default, no additional
-         padding is added to such packets.";
-    }
+    uses bfd-large-common;
     description
       "Augment the 'bfd' container to add attributes related to BFD
        Encapsulated in Large Packets.";
