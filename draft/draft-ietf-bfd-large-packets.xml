@@ -311,6 +311,71 @@ INSERT_TEXT_FROM_FILE(../bin/ietf-bfd-large@YYYY-MM-DD-tree.txt,69)
 	    This document does not change the underlying security considerations of the BFD protocol
 	    or its encapsulations.
 	    </t>
+
+            <section title="YANG Security Considerations">
+                <t>
+                  The YANG module specified in this document defines a schema
+                  for data that is designed to be accessed via network
+                  management protocols such as <xref
+                  target="RFC6241">NETCONF</xref> or <xref
+                  target="RFC8040">RESTCONF</xref>. The lowest NETCONF layer is
+                  the secure transport layer, and the mandatory-to-implement
+                  secure transport is <xref target="RFC6242">Secure Shell
+                  (SSH)</xref>. The lowest RESTCONF layer is HTTPS, and the
+                  mandatory-to-implement secure transport is <xref
+                  target="RFC8446">TLS</xref>. The <xref
+                  target="RFC8341">NETCONF Access Control Model (NACM) </xref>
+                  provides the means to restrict access for particular NETCONF
+                  or RESTCONF users to a preconfigured subset of all available
+                  NETCONF or RESTCONF protocol operations and content.
+                </t>
+
+                <t>
+                  There are a number of data nodes defined in this YANG module
+                  that are writable/creatable/deletable (i.e., config true,
+                  which is the default).  These data nodes may be considered
+                  sensitive or vulnerable in some network environments. Write
+                  operations (e.g., edit-config) to these data nodes without
+                  proper protection can have a negative effect on network
+                  operations. Some of the subtrees and data nodes and their
+                  sensitivity/vulnerability are described here.
+                </t>
+
+                <ul>
+                  <li>
+                    'padded-pdu-size' specifies the targeted size of BFD control packets
+                    encapsulated according to this proposal.  Changing this value for a
+                    session in the Up state may cause the session to go down, perhaps
+                    intentionally, if the session cannot accommodate such BFD control
+                    packets.  Operators should be mindful that multiple BFD clients may
+                    rely on the status of a given BFD session when changing this value.
+                  </li>
+                </ul>
+
+                <t>
+                  Some of the readable data nodes in this YANG module may be
+                  considered sensitive or vulnerable in some network
+                  environments. It is thus important to control read access
+                  (e.g., via get, get-config, or notification) to these data
+                  nodes.
+                </t>
+
+                <t>
+                  There are no read-only data nodes defined in this model.
+                </t>
+
+                <t>
+                  Some of the RPC operations in this YANG module may be
+                  considered sensitive or vulnerable in some network
+                  environments. It is thus important to control access to these
+                  operations.
+                </t>
+
+                <t>
+                  There are no RPC operations defined in this model.
+                </t>
+            </section>
+
 	</section>
 
 	<section title="IANA Considerations">
@@ -335,10 +400,15 @@ INSERT_TEXT_FROM_FILE(../bin/ietf-bfd-large@YYYY-MM-DD-tree.txt,69)
             <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.5880.xml"/>
             <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.5881.xml"/>
             <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.5883.xml"/>
+            <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6241.xml"/>
+            <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6242.xml"/>
             <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.7130.xml"/>
             <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.7880.xml"/>
+            <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8040.xml"/>
             <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8174.xml"/>
+            <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8341.xml"/>
             <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8349.xml"/>
+            <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8446.xml"/>
             <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.9314.xml"/>
 	</references>
 	<references title="Informative References">
