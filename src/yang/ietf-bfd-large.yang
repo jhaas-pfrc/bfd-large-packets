@@ -110,8 +110,8 @@ module ietf-bfd-large {
        sized packet of a given BFD session, then the minimum sized
        packet for the session will be used.
 
-       The maximum padded PDU size may be limited by the supported interface
-       MTU of the system.";
+       The maximum padded PDU size may be limited by the supported
+       interface MTU of the system.";
     reference
       "RFC XXXX, BFD Encapsulated in Large Packets.";
   }
