@@ -212,7 +212,7 @@
 
 	      <t>
 	      It should be noted that some interfaces may intentionally have different MTUs.
-	      Setting the bfd.PaddedPduSize appropriately for each side of the interface
+	      Setting the bfd.PaddedPduSize appropriately for each side of the BFD session
 	      supports such scenarios.
 	      </t>
 	    </section>
