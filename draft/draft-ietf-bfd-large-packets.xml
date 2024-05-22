@@ -201,10 +201,10 @@
 
 	      <t>
 	      When it is necessary for an application using BFD with Large Packets to test
-	      the bi-directional Path MTU, it is necessary to configure the
-	      bfd.PaddedPduSize parameter on both sides of an interface.  E.g., if
+              the bi-directional Path MTU, it is necessary to configure the
+              bfd.PaddedPduSize parameter on each side of the BFD session. E.g., if
 	      the desire is to verify a 1500 byte MTU in both directions on an Ethernet or
-	      point to point link, each side of the BFD session must have bfd.PaddedPduSize
+              point to point link, each side of the BFD session must have bfd.PaddedPduSize
 	      set to 1500.  In the absence of such consistent configuration, BFD with 
 	      Large Packets may correctly determine unidirectional connectivity at the
 	      tested MTU, but bi-directional MTU may not be properly validated.
