@@ -102,9 +102,15 @@ module ietf-bfd-large {
     }
     units "bytes";
     description
-      "The padded PDU size for the encapsulated BFD control packets.
-       The minimum size is 24 or 26; see Section 6.8.6 of RFC 5880.
-       The maximum PDU size may be limited by the supported interface
+      "The size of the padded and encapsulated BFD control packets
+       to be transmitted at layer 3.  The BFD minimum control packet
+       size is 24 or 26 octets; see Section 6.8.6 of RFC 5880.
+
+       If the configured padded PDU size is smaller than the minimum
+       sized packet of a given BFD session, then the minimum sized
+       packet for the session will be used.
+
+       The maximum padded PDU size may be limited by the supported interface
        MTU of the system.";
     reference
       "RFC XXXX, BFD Encapsulated in Large Packets.";
