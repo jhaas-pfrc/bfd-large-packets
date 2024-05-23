@@ -20,7 +20,7 @@
 <rfc 
     xmlns:xi="http://www.w3.org/2001/XInclude"
     category="std"
-    docName="draft-ietf-bfd-large-packets-09"
+    docName="draft-ietf-bfd-large-packets-10"
     ipr="trust200902"
     submissionType="IETF"
     xml:lang="en"
@@ -183,7 +183,7 @@
 
 	      <t>
 	      In the case multiple BFD clients desire to test the same BFD endpoints using
-	      different bfd.PaddedPduSize parameters, implementations should select the largest
+	      different bfd.PaddedPduSize parameters, implementations SHOULD select the largest
 	      bfd.PaddedPduSize parameter from the configured sessions.  This is similar to
 	      how implementations of BFD select the most aggressive timing parameters
 	      for multiple sessions to the same endpoint.
@@ -278,6 +278,20 @@
                 'padding' to enable this feature. The feature statement
                 'padding' needs to be enabled to indicate that BFD Encapsulated
                 in Large Packet is supported by the implementation.
+                </t>
+
+                <t>
+                Further, this YANG module augments the YANG modules for single-hop,
+                multi-hop, LAG and MPLS to add the "padded-pdu-size"
+                parameter to those session types to configure Large BFD packets.
+                </t>
+
+                <t>
+                Finally, similar to the grouping "client-cfg-parms" defined in 
+                <xref section="2.1" target="RFC9314"/>, this YANG module defines a grouping
+                "bfd-large-common" that may be utilized by BFD clients using
+                "client-cfg-params" to uniformly add support for the feature
+                defined in this RFC.
                 </t>
 
                 <figure>
