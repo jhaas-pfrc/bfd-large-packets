@@ -20,7 +20,7 @@
 <rfc 
     xmlns:xi="http://www.w3.org/2001/XInclude"
     category="std"
-    docName="draft-ietf-bfd-large-packets-10"
+    docName="draft-ietf-bfd-large-packets-11"
     ipr="trust200902"
     submissionType="IETF"
     xml:lang="en"
@@ -190,7 +190,7 @@
 	      </t>
 	    </section>
 
-	    <section title="Detecting MTU mismatches">
+	    <section title="Detecting MTU Mismatches">
 	      <t>
 	      The accepted MTU for an interface is impacted by packet encapsulation
 	      considerations at a given layer; e.g. layer 2, layer 3, tunnel, etc.  A common
@@ -214,6 +214,21 @@
 	      It should be noted that some interfaces may intentionally have different MTUs.
 	      Setting the bfd.PaddedPduSize appropriately for each side of the BFD session
 	      supports such scenarios.
+	      </t>
+	    </section>
+
+	    <section title="Detecting MTU Changes">
+	      <t>
+              Once BFD sessions using Large Packets has reached the Up state,
+              connectivity at the tested MTU(s) for the session is being
+              validated.  If the path MTU tested by the BFD with Large Packets
+              session falls below the tested MTU, the BFD session will go Down.
+              </t>
+              <t>
+              In the opposite circumstance where the path MTU increases, the
+              BFD session will continue without being impacted.  BFD for Large
+              Packets only ensures that the minimally acceptable MTU for the
+              session is able to be used.
 	      </t>
 	    </section>
 
