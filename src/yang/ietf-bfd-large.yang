@@ -4,7 +4,7 @@ module ietf-bfd-large {
   prefix "bfdl";
 
   import ietf-routing {
-    prefix "rt";
+    prefix rt;
     reference
       "RFC 8349: A YANG Data Model for Routing Management
        (NMDA version)";

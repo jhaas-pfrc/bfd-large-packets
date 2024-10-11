@@ -20,7 +20,7 @@
 <rfc 
     xmlns:xi="http://www.w3.org/2001/XInclude"
     category="std"
-    docName="draft-ietf-bfd-large-packets-11"
+    docName="draft-ietf-bfd-large-packets-12"
     ipr="trust200902"
     submissionType="IETF"
     xml:lang="en"
@@ -60,9 +60,15 @@
 	    The Bidirectional Forwarding Detection (BFD) protocol is commonly used to verify
 	    connectivity between two systems.  BFD packets are typically very small.  It is
 	    desirable in some circumstances to know that not only is the path between two systems
-	    reachable, but also that it is capable of carrying a payload of a particular size.  This
-	    document discusses thoughts on how to implement such a mechanism using BFD in
-	    Asynchronous mode.
+	    reachable, but also that it is capable of carrying a payload of a particular size.
+	    This document specifies how to implement such a mechanism using BFD in Asynchronous
+	    mode.
+	    </t>
+	    <t>
+	    YANG modules for managing this mechanism are also defined in this document.  These
+	    YANG modules augment the existing BFD YANG modules defined in RFC 9314.
+	    The YANG modules in this document conform to the Network Management Datastore
+	    Architecture (NMDA) (RFC 8342).
 	    </t>
 	</abstract>
     </front>
@@ -73,7 +79,7 @@
 	    The Bidirectional Forwarding Detection (BFD) <xref target="RFC5880"/> protocol is commonly
 	    used to verify connectivity between two systems.  However, some applications may require
 	    that the Path MTU <xref target="RFC1191"/> between those two systems meets a certain
-	    minimum criteria.  When the Path MTU decreases below the minimum threshold, those
+	    minimum criterion.  When the Path MTU decreases below the minimum threshold, those
 	    applications may wish to consider the path unusable.
 	    </t>
 
@@ -92,7 +98,7 @@
 	    The encapsulation of BFD in multi-hop sessions is a simple UDP packet.  The BFD elements
 	    of procedure (Section 6.8.6 of <xref target="RFC5880"/>) covers validating the BFD
 	    payload.  However, the specification is silent on the length of the encapsulation that is
-	    carrying the BFD PDU.  While it is most common that the transport protocol payload (i.e.
+	    carrying the BFD PDU.  While it is most common that the transport protocol payload (i.e.,
 	    UDP) length is the exact size of the BFD PDU, this is not required by the elements of
 	    procedure.  This leads to the possibility that the transport protocol length may be
 	    larger than the contained BFD PDU.
@@ -119,7 +125,7 @@
             <dl newline='true'>
             <dt>bfd.PaddedPduSize</dt>
             <dd>
-	      The BFD transport protocol payload size is increased to this value.  The contents of
+	      The BFD transport protocol payload size (in bytes) is increased to this value.  The contents of
 	      this additional payload MUST be zero.  The minimum size of this variable MUST NOT be
 	      smaller than permitted by the element of BFD procedure; 24 or 26 - see Section 6.8.6
 	      of <xref target="RFC5880"/>. 
@@ -143,7 +149,7 @@
 
 	      <t>
 	      <xref target="RFC5880"/>, section 6.8.6, discusses the procedures for receiving
-	      BFD Control packets.  When an implementation is incapable of processing Large
+	      BFD Control packets.  When a receiving implementation is incapable of processing Large
 	      BFD Packets, it could manifest in one of two possible ways:
 	      </t>
 
@@ -161,7 +167,7 @@
 
 	      <t>
 	      In each of these cases, the BFD state machine would behave as if it were not
-	      receiving Control packets and the implementation would follow normal BFD
+	      receiving Control packets and the receiving implementation would follow normal BFD
 	      procedures with regards to not having received control packets.
 	      </t>
 
@@ -176,7 +182,7 @@
 	      <t>
 	      Since the consideration is path MTU, BFD sessions using this feature only need to use a
 	      bfd.PaddedPduSize appropriate to exercise the path MTU for the desired application.
-	      This may be significantly smaller than the system's link MTU; e.g. desired path MTU is
+	      This may be significantly smaller than the system's link MTU; e.g., desired path MTU is
 	      1512 bytes while the interface MTU that BFD with large packets is running on is 9000
 	      bytes.
 	      </t>
@@ -193,7 +199,7 @@
 	    <section title="Detecting MTU Mismatches">
 	      <t>
 	      The accepted MTU for an interface is impacted by packet encapsulation
-	      considerations at a given layer; e.g. layer 2, layer 3, tunnel, etc.  A common
+	      considerations at a given layer; e.g., layer 2, layer 3, tunnel, etc.  A common
 	      misconfiguration of interface parameters is inconsistent MTU.  In the presence
 	      of inconsistent MTU, it is possible for applications to have unidirectional
 	      connectivity.
@@ -268,7 +274,7 @@
 	      </t>
 
 	      <t>
-	      Mis-configuration of some member MTUs may lead to Load Balancing that may have
+	      Misconfiguration of some member MTUs may lead to Load Balancing that may have
 	      an inconsistent Path MTU depending on how the traffic is balanced.  While the
 	      intent of BFD with Large Packets is to verify path MTU, it is subject to the
 	      same considerations above.
@@ -297,7 +303,7 @@
 
                 <t>
                 Further, this YANG module augments the YANG modules for single-hop,
-                multi-hop, LAG and MPLS to add the "padded-pdu-size"
+                multi-hop, LAG, and MPLS to add the "padded-pdu-size"
                 parameter to those session types to configure Large BFD packets.
                 </t>
 
@@ -364,7 +370,7 @@ INSERT_TEXT_FROM_FILE(../bin/ietf-bfd-large@YYYY-MM-DD-tree.txt,69)
                   that are writable/creatable/deletable (i.e., config true,
                   which is the default).  These data nodes may be considered
                   sensitive or vulnerable in some network environments. Write
-                  operations (e.g., edit-config) to these data nodes without
+                  operations (e.g.,, edit-config) to these data nodes without
                   proper protection can have a negative effect on network
                   operations. Some of the subtrees and data nodes and their
                   sensitivity/vulnerability are described here.
