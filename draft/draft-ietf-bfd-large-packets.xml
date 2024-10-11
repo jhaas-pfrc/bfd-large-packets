@@ -370,7 +370,7 @@ INSERT_TEXT_FROM_FILE(../bin/ietf-bfd-large@YYYY-MM-DD-tree.txt,69)
                   that are writable/creatable/deletable (i.e., config true,
                   which is the default).  These data nodes may be considered
                   sensitive or vulnerable in some network environments. Write
-                  operations (e.g.,, edit-config) to these data nodes without
+                  operations (e.g., edit-config) to these data nodes without
                   proper protection can have a negative effect on network
                   operations. Some of the subtrees and data nodes and their
                   sensitivity/vulnerability are described here.
