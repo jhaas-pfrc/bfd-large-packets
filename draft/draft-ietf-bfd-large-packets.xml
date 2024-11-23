@@ -20,7 +20,7 @@
 <rfc 
     xmlns:xi="http://www.w3.org/2001/XInclude"
     category="std"
-    docName="draft-ietf-bfd-large-packets-12"
+    docName="draft-ietf-bfd-large-packets-13"
     ipr="trust200902"
     submissionType="IETF"
     xml:lang="en"
@@ -191,8 +191,10 @@
 	      In the case multiple BFD clients desire to test the same BFD endpoints using
 	      different bfd.PaddedPduSize parameters, implementations SHOULD select the largest
 	      bfd.PaddedPduSize parameter from the configured sessions.  This is similar to
-	      how implementations of BFD select the most aggressive timing parameters
-	      for multiple sessions to the same endpoint.
+	      how implementations of BFD select the most aggressive timing parameters for multiple
+	      sessions to the same endpoint.  Failure to select the largest size will result in BFD
+	      sessions going to the Up state and dependent applications not having their MTU
+	      requirements satisfied.
 	      </t>
 	    </section>
 
@@ -280,6 +282,11 @@
 	      same considerations above.
 	      </t>
 
+	      <t>
+	      <!-- This text added to make Eric Vyncke happy during AD review -->
+	      The above text also applies to most, if not all, BFD techniques.
+	      </t>
+
 
 	    </section>
 
@@ -345,6 +352,12 @@ INSERT_TEXT_FROM_FILE(../bin/ietf-bfd-large@YYYY-MM-DD-tree.txt,69)
 	    <t>
 	    This document does not change the underlying security considerations of the BFD protocol
 	    or its encapsulations.
+	    </t>
+
+	    <t>
+	    <!-- This text added to make Eric Vyncke happy -->
+	    On-path attackers that can selectively drop BFD packets, including those with large
+	    MTUs, can cause BFD sessions to go Down.
 	    </t>
 
             <section title="YANG Security Considerations">
