@@ -435,9 +435,34 @@ INSERT_TEXT_FROM_FILE(../bin/ietf-bfd-large@YYYY-MM-DD-tree.txt,69)
 	</section>
 
 	<section title="IANA Considerations">
-	    <t>
-	    This document introduces no additional considerations to IANA.
-	    </t>
+            <section title="The &quot;IETF XML&quot; Registry">
+                <t>This document registers one URIs in the "ns" subregistry of the
+                "IETF XML" registry <xref target="RFC3688"/>. Following the format in
+                <xref target="RFC3688"/>, the following registration is requested:</t>
+
+                    <figure>
+                        <artwork><![CDATA[URI: urn:ietf:params:xml:ns:yang:ietf-bfd-large
+Registrant Contact: The IESG
+XML: N/A, the requested URI is an XML namespace.
+]]>
+                        </artwork>
+                    </figure>
+            </section>
+
+            <section title="The &quot;YANG Module Names&quot; Registry">
+                <t>This document registers one YANG modules in the "YANG Module Names"
+                registry <xref target="RFC6020"/>. Following the format in <xref
+                target="RFC6020"/>, the following registrations are requested:</t>
+
+                <figure>
+                    <artwork><![CDATA[
+name:         ietf-bfd-large
+namespace:    urn:ietf:params:xml:ns:yang:ietf-bfd-large
+prefix:       bfdl
+reference:    RFC XXXX
+]]></artwork>
+                </figure>
+            </section>
 	</section>
 
 	<section title="Acknowledgments">
@@ -453,9 +478,11 @@ INSERT_TEXT_FROM_FILE(../bin/ietf-bfd-large@YYYY-MM-DD-tree.txt,69)
 	<references title="Normative References">
             <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.0791.xml"/>
             <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.2119.xml"/>
+            <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.3688.xml"/>
             <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.5880.xml"/>
             <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.5881.xml"/>
             <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.5883.xml"/>
+            <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6020.xml"/>
             <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6241.xml"/>
             <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6242.xml"/>
             <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.7130.xml"/>
