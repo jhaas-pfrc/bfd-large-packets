@@ -49,7 +49,7 @@ module ietf-bfd-large {
     "IETF BFD Working Group";
 
   contact
-    "WG Web:   <http://tools.ietf.org/wg/bfd>
+    "WG Web:   <https://datatracker.ietf.org/wg/bfd>
      WG List:  <rtg-bfd@ietf.org>
 
      Authors: Jeffrey Haas (jhaas@juniper.net)

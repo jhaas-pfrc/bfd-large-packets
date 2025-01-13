@@ -20,7 +20,7 @@
 <rfc 
     xmlns:xi="http://www.w3.org/2001/XInclude"
     category="std"
-    docName="draft-ietf-bfd-large-packets-14"
+    docName="draft-ietf-bfd-large-packets-15"
     ipr="trust200902"
     submissionType="IETF"
     xml:lang="en"
@@ -61,7 +61,7 @@
 
 	    </address>
 	</author>
-	<date year="2024" />
+	<date year="2025" />
 
 	<abstract>
 	    <t>
@@ -133,10 +133,11 @@
             <dl newline='true'>
             <dt>bfd.PaddedPduSize</dt>
             <dd>
-	      The BFD transport protocol payload size (in bytes) is increased to this value.  The contents of
-	      this additional payload MUST be zero.  The minimum size of this variable MUST NOT be
-	      smaller than permitted by the element of BFD procedure; 24 or 26 - see Section 6.8.6
-	      of <xref target="RFC5880"/>. 
+            The BFD transport protocol payload size (in bytes) is increased to this value.  The
+            contents of this additional payload MUST be zero.  The contents of this additional
+            payload SHOULD NOT be validated by the receiver. The minimum size of this variable
+            MUST NOT be smaller than permitted by the element of BFD procedure; 24 or 26 - see
+            Section 6.8.6 of <xref target="RFC5880"/>.
 	    </dd>
             </dl>
 
@@ -157,8 +158,10 @@
 
 	      <t>
 	      <xref target="RFC5880"/>, section 6.8.6, discusses the procedures for receiving
-	      BFD Control packets.  When a receiving implementation is incapable of processing Large
-	      BFD Packets, it could manifest in one of two possible ways:
+	      BFD Control packets.  The length of the BFD Control packet is validated to be less
+              than or equal to the payload of the encapsulating protocol. When a receiving
+              implementation is incapable of processing Large BFD Packets, it could manifest in one
+              of two possible ways:
 	      </t>
 
               <ul>
@@ -176,7 +179,7 @@
 	      <t>
 	      In each of these cases, the BFD state machine would behave as if it were not
 	      receiving Control packets and the receiving implementation would follow normal BFD
-	      procedures with regards to not having received control packets.
+	      procedures regarding not having received control packets.
 	      </t>
 
 	      <t>
@@ -244,7 +247,7 @@
               In the opposite circumstance where the path MTU increases, the
               BFD session will continue without being impacted.  BFD for Large
               Packets only ensures that the minimally acceptable MTU for the
-              session is able to be used.
+              session can be used.
 	      </t>
 	    </section>
 
@@ -368,6 +371,12 @@ INSERT_TEXT_FROM_FILE(../bin/ietf-bfd-large@YYYY-MM-DD-tree.txt,69)
 	    MTUs, can cause BFD sessions to go Down.
 	    </t>
 
+            <t>
+            <!-- This text added to make security people happy. -->
+            The contents of the padding payload are set to zero.  This avoids implementation issues
+            where the local uninitialized data may be leaked.
+            </t>
+
             <section title="YANG Security Considerations">
                 <t>
                   The YANG module specified in this document defines a schema
@@ -467,7 +476,7 @@ reference:    RFC XXXX
 
 	<section title="Acknowledgments">
 	    <t>
-	    The authors would like to thank Les Ginsberg, Mahesh Jethandani, Robert Raszuk,
+	    The authors would like to thank Les Ginsberg, Mahesh Jethanandani, Robert Raszuk,
 	    and Ketan Talaulikar, for their valuable feedback on this proposal.
 	    </t>
 	</section>
