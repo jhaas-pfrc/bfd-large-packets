@@ -20,7 +20,7 @@
 <rfc 
     xmlns:xi="http://www.w3.org/2001/XInclude"
     category="std"
-    docName="draft-ietf-bfd-large-packets-15"
+    docName="draft-ietf-bfd-large-packets-16"
     ipr="trust200902"
     submissionType="IETF"
     xml:lang="en"
@@ -321,7 +321,7 @@
 
                 <t>
                 Further, this YANG module augments the YANG modules for single-hop,
-                multi-hop, LAG, and MPLS to add the "padded-pdu-size"
+                multi-hop, LAG, and MPLS to add the "pdu-size"
                 parameter to those session types to configure Large BFD packets.
                 </t>
 
@@ -379,36 +379,39 @@ INSERT_TEXT_FROM_FILE(../bin/ietf-bfd-large@YYYY-MM-DD-tree.txt,69)
 
             <section title="YANG Security Considerations">
                 <t>
-                  The YANG module specified in this document defines a schema
-                  for data that is designed to be accessed via network
-                  management protocols such as <xref
-                  target="RFC6241">NETCONF</xref> or <xref
-                  target="RFC8040">RESTCONF</xref>. The lowest NETCONF layer is
-                  the secure transport layer, and the mandatory-to-implement
-                  secure transport is <xref target="RFC6242">Secure Shell
-                  (SSH)</xref>. The lowest RESTCONF layer is HTTPS, and the
-                  mandatory-to-implement secure transport is <xref
-                  target="RFC8446">TLS</xref>. The <xref
-                  target="RFC8341">NETCONF Access Control Model (NACM) </xref>
-                  provides the means to restrict access for particular NETCONF
-                  or RESTCONF users to a preconfigured subset of all available
-                  NETCONF or RESTCONF protocol operations and content.
+                This section is modeled after the template described in Section 3.7
+                of <xref target="I-D.ietf-netmod-rfc8407bis"/>.
                 </t>
 
                 <t>
-                  There are a number of data nodes defined in this YANG module
-                  that are writable/creatable/deletable (i.e., config true,
-                  which is the default).  These data nodes may be considered
-                  sensitive or vulnerable in some network environments. Write
-                  operations (e.g., edit-config) to these data nodes without
-                  proper protection can have a negative effect on network
-                  operations. Some of the subtrees and data nodes and their
-                  sensitivity/vulnerability are described here.
+                The "ietf-bfd-large" YANG module defines a data model that is
+                designed to be accessed via YANG-based management protocols, such as
+                NETCONF <xref target="RFC6241"/> and RESTCONF <xref target="RFC8040"/>. These protocols have to
+                use a secure transport layer (e.g., SSH <xref target="RFC4252"/>, TLS <xref target="RFC8446"/>, and
+                QUIC <xref target="RFC9000"/>) and have to use mutual authentication.
+                </t>
+
+                <t>
+                The Network Configuration Access Control Model (NACM) <xref target="RFC8341"/>
+                provides the means to restrict access for particular NETCONF or
+                RESTCONF users to a preconfigured subset of all available NETCONF or
+                RESTCONF protocol operations and content.
+                </t>
+
+                <t>
+                There is one data node defined in this YANG module that is
+                writable/creatable/deletable (i.e., "config true", which is the
+                default).  All writable data nodes are likely to be reasonably
+                sensitive or vulnerable in some network environments.  Write
+                operations (e.g., edit-config) and delete operations to these data
+                nodes without proper protection or authentication can have a negative
+                effect on network operations.  The data node
+                has particular sensitivities/vulnerabilities:
                 </t>
 
                 <ul>
                   <li>
-                    'padded-pdu-size' specifies the targeted size of BFD control packets
+                    'pdu-size' specifies the targeted size of BFD control packets
                     encapsulated according to this proposal.  Changing this value for a
                     session in the Up state may cause the session to go down, perhaps
                     intentionally, if the session cannot accommodate such BFD control
@@ -418,29 +421,20 @@ INSERT_TEXT_FROM_FILE(../bin/ietf-bfd-large@YYYY-MM-DD-tree.txt,69)
                 </ul>
 
                 <t>
-                  Some of the readable data nodes in this YANG module may be
-                  considered sensitive or vulnerable in some network
-                  environments. It is thus important to control read access
-                  (e.g., via get, get-config, or notification) to these data
-                  nodes.
+                There are no particularly sensitive readable data nodes.
                 </t>
 
                 <t>
-                  There are no read-only data nodes defined in this model.
+                There are no particularly sensitive RPC or action operations.
                 </t>
 
                 <t>
-                  Some of the RPC operations in this YANG module may be
-                  considered sensitive or vulnerable in some network
-                  environments. It is thus important to control access to these
-                  operations.
-                </t>
-
-                <t>
-                  There are no RPC operations defined in this model.
+                Modules that use the groupings that are defined in this document should identify the
+                corresponding security considerations. This module defines one such grouping,
+                "bfd-large-common", which contains the "pdu-size" data node whose security
+                considerations are documented above.
                 </t>
             </section>
-
 	</section>
 
 	<section title="IANA Considerations">
@@ -492,20 +486,22 @@ reference:    RFC XXXX
             <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.5881.xml"/>
             <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.5883.xml"/>
             <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6020.xml"/>
-            <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6241.xml"/>
-            <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6242.xml"/>
             <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.7130.xml"/>
             <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.7880.xml"/>
-            <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8040.xml"/>
             <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8174.xml"/>
             <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8341.xml"/>
             <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8349.xml"/>
-            <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8446.xml"/>
             <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.9314.xml"/>
 	</references>
 	<references title="Informative References">
             <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.1191.xml"/>
+            <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.4252.xml"/>
+            <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6241.xml"/>
+            <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8040.xml"/>
+            <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8446.xml"/>
+            <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.9000.xml"/>
             <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.haas-xiao-bfd-echo-path-mtu.xml"/>
+            <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-netmod-rfc8407bis-22.xml"/>
 	</references>
     </back>
 </rfc>
